@@ -1,6 +1,6 @@
 package com.sendbird.mylibrary.di
 
-import com.sendbird.mylibrary.data.remote.MainService
+import com.sendbird.mylibrary.data.remote.service.MainService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

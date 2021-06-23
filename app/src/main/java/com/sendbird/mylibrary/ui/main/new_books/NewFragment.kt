@@ -1,4 +1,4 @@
-package com.sendbird.mylibrary.ui.main.fragment
+package com.sendbird.mylibrary.ui.main.new_books
 
 import android.os.Bundle
 import android.view.View
@@ -7,12 +7,14 @@ import androidx.fragment.app.viewModels
 import com.sendbird.mylibrary.R
 import com.sendbird.mylibrary.core.base.BaseFragment
 import com.sendbird.mylibrary.databinding.FragmentNewBinding
-import com.sendbird.mylibrary.databinding.FragmentSearchBinding
 import com.sendbird.mylibrary.ui.main.MainViewModel
+import com.sendbird.mylibrary.ui.main.adapter.BookAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
-class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
+@AndroidEntryPoint
+class NewFragment : BaseFragment<FragmentNewBinding>(R.layout.fragment_new) {
 
-    private val newViewModel by viewModels<SearchViewModel>()
+    private val newViewModel by viewModels<NewViewModel>()
     private val mainViewModel by activityViewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,15 +29,32 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
 
         }
 
+        setupRecyclerView()
+
         observeViewModel()
     }
 
-    private fun observeViewModel() {
+    override fun onResume() {
+        super.onResume()
 
+        newViewModel.getNewBooks()
+    }
+
+    private fun setupRecyclerView() {
+        binding.rvNewBooks.apply {
+            adapter = BookAdapter()
+            setHasFixedSize(true)
+        }
+    }
+
+    private fun observeViewModel() {
+        newViewModel.books.observe(viewLifecycleOwner, {
+            (binding.rvNewBooks.adapter as BookAdapter).submitList(it)
+        })
     }
 
     companion object {
         @JvmStatic
-        fun newInstance() = SearchFragment()
+        fun newInstance() = NewFragment()
     }
 }

@@ -1,4 +1,4 @@
-package com.sendbird.mylibrary.ui.main.fragment
+package com.sendbird.mylibrary.ui.main.bookmark
 
 import android.os.Bundle
 import android.view.View
@@ -8,7 +8,9 @@ import com.sendbird.mylibrary.R
 import com.sendbird.mylibrary.core.base.BaseFragment
 import com.sendbird.mylibrary.databinding.FragmentBookMarkBinding
 import com.sendbird.mylibrary.ui.main.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BookMarkFragment : BaseFragment<FragmentBookMarkBinding>(R.layout.fragment_book_mark) {
 
     private val newViewModel by viewModels<BookMarkViewModel>()

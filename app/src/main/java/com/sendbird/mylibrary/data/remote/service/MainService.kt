@@ -1,6 +1,7 @@
-package com.sendbird.mylibrary.data.remote
+package com.sendbird.mylibrary.data.remote.service
 
 import com.google.gson.JsonObject
+import com.sendbird.mylibrary.data.remote.model.RespNewBooks
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -11,7 +12,7 @@ interface MainService {
      * 리스트를 가져온다
      * */
     @GET("new")
-    fun fetchNew(): Single<JsonObject>
+    fun fetchNew(): Single<RespNewBooks>
 
     @GET("search/{query}/{page}")
     fun fetchSearch(
@@ -19,8 +20,8 @@ interface MainService {
         @Path("page") page: String
     ): Single<JsonObject>
 
-    @GET("books/{isbn}")
+    @GET("books/{isbn13}")
     fun fetchDetail(
-        @Path("isbn") isbn: String
+        @Path("isbn13") isbn13: String
     ): Single<JsonObject>
 }

@@ -1,4 +1,4 @@
-package com.sendbird.mylibrary.ui.main.fragment
+package com.sendbird.mylibrary.ui.main.search
 
 import android.os.Bundle
 import android.view.View
@@ -6,12 +6,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.sendbird.mylibrary.R
 import com.sendbird.mylibrary.core.base.BaseFragment
-import com.sendbird.mylibrary.databinding.FragmentNewBinding
+import com.sendbird.mylibrary.databinding.FragmentSearchBinding
 import com.sendbird.mylibrary.ui.main.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class NewFragment : BaseFragment<FragmentNewBinding>(R.layout.fragment_new) {
+@AndroidEntryPoint
+class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
 
-    private val newViewModel by viewModels<NewViewModel>()
+    private val newViewModel by viewModels<SearchViewModel>()
     private val mainViewModel by activityViewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +37,6 @@ class NewFragment : BaseFragment<FragmentNewBinding>(R.layout.fragment_new) {
 
     companion object {
         @JvmStatic
-        fun newInstance() = NewFragment()
+        fun newInstance() = SearchFragment()
     }
 }

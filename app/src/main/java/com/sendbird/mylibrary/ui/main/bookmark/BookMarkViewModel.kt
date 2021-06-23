@@ -1,4 +1,4 @@
-package com.sendbird.mylibrary.ui.main.fragment
+package com.sendbird.mylibrary.ui.main.bookmark
 
 import com.sendbird.mylibrary.core.base.BaseViewModel
 import com.sendbird.mylibrary.repository.MainRepository

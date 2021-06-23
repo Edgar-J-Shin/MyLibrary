@@ -6,6 +6,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.sendbird.mylibrary.R
 import com.sendbird.mylibrary.core.base.BaseActivity
 import com.sendbird.mylibrary.databinding.ActivityMainBinding
+import com.sendbird.mylibrary.ui.main.adapter.SectionsPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
