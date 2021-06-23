@@ -12,5 +12,5 @@ import dagger.hilt.android.components.ViewModelComponent
 abstract class RepositoryModule {
 
     @Binds
-    abstract fun bindWishListRepository(mainRepositoryImpl: MainRepositoryImpl): MainRepository
+    abstract fun bindMainRepository(mainRepositoryImpl: MainRepositoryImpl): MainRepository
 }
