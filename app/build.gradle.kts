@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -38,19 +39,13 @@ android {
     buildFeatures {
         dataBinding = true
     }
+
+    android {
+        
+    }
 }
 
 dependencies {
-
-    with(Deps.TestLib) {
-        testImplementation(junit)
-    }
-
-    with(Deps.AndroidTestLib) {
-        androidTestImplementation(androidxJunit)
-        androidTestImplementation(espresso)
-    }
-
 
     with(Deps.Lib.Kotlin) {
         implementation(kotlin)
@@ -61,6 +56,7 @@ dependencies {
         implementation(appcompat)
         implementation(constraintLayout)
         implementation(material)
+
         implementation(coreKtx)
         implementation(activityKtx)
         implementation(fragmentKtx)
@@ -124,6 +120,14 @@ dependencies {
     with(Deps.Lib.Etc) {
         implementation(timber)
         implementation(tedPermission)
-        debugImplementation(leakCanary)
+    }
+
+    with(Deps.TestLib) {
+        testImplementation(junit)
+    }
+
+    with(Deps.AndroidTestLib) {
+        androidTestImplementation(androidxJunit)
+        androidTestImplementation(espresso)
     }
 }

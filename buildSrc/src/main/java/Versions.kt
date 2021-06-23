@@ -24,7 +24,7 @@ object Versions {
     const val gradle = "4.1.3"
 
     // kotlin
-    const val kotlin = "1.4.31"
+    const val kotlin = "1.5.0"
     const val coroutine = "1.4.3"
 
     // android
