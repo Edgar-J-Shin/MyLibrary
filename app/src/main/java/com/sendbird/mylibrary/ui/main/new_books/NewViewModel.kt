@@ -32,9 +32,7 @@ class NewViewModel @Inject constructor(private val mainRepository: MainRepositor
         compositeDisposable += mainRepository.fetchNew()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                Timber.e("sjh success")
                 if (it.error == "0") {
-                    Timber.e("sjh success : $it")
                     _books.value = it.books
                 }
             }) {

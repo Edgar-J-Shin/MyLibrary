@@ -1,4 +1,4 @@
-package com.sendbird.mylibrary.utils
+package com.sendbird.mylibrary.core.util
 
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
