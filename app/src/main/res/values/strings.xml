@@ -1,12 +1,21 @@
 <resources>
     <string name="app_name">My Library</string>
 
+    <!-- Main Tab -->
     <string name="tab_title_1">New</string>
     <string name="tab_title_2">Search</string>
     <string name="tab_title_3">BookMark</string>
 
+    <!-- Search -->
+    <string name="search_hint">Search for books</string>
+    <string name="search_empty">No results found.</string>
+    <string name="search_history_recent_search_history">Recent Search History</string>
+    <string name="search_history_clear_all">Clear All</string>
+
+    <!-- Book -->
     <string name="book_price">"Price: %s"</string>
     <string name="book_isbn13">"Isbn13: %s"</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="search_hint">Search for books</string>
 </resources>

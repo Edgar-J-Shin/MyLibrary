@@ -7,32 +7,21 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView.OnEditorActionListener
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.commit
 import com.sendbird.mylibrary.R
 import com.sendbird.mylibrary.core.base.BaseFragment
-import com.sendbird.mylibrary.core.util.OnLoadMoreListener
 import com.sendbird.mylibrary.databinding.FragmentSearchBinding
 import com.sendbird.mylibrary.ui.main.MainViewModel
-import com.sendbird.mylibrary.ui.main.adapter.BookAdapter
+import com.sendbird.mylibrary.ui.main.search_books.search_empty.SearchEmptyFragment
+import com.sendbird.mylibrary.ui.main.search_books.search_history.SearchHistoryFragment
+import com.sendbird.mylibrary.ui.main.search_books.search_result.SearchResultFragment
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
 
-    private val PAGE_SIZE = 10
-
-    private val searchViewModel by viewModels<SearchViewModel>()
-    private val mainViewModel by activityViewModels<MainViewModel>()
-
-    private val loadMoreListener = OnLoadMoreListener {
-        searchViewModel.searchBooks(it)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private val searchViewModel by activityViewModels<SearchViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,17 +31,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
             viewModel = this@SearchFragment.searchViewModel
         }
 
-        setupRecyclerView()
         setupKeyboardEvent()
         observeViewModel()
-    }
-
-    private fun setupRecyclerView() {
-        binding.rvSearch.apply {
-            setHasFixedSize(true)
-            addOnScrollListener(loadMoreListener)
-            adapter = BookAdapter()
-        }
     }
 
     private fun setupKeyboardEvent() {
@@ -66,34 +46,38 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
     }
 
     private fun observeViewModel() {
-        searchViewModel.books.observe(viewLifecycleOwner, {
-            (binding.rvSearch.adapter as BookAdapter).apply {
-                submitList(it)
-                notifyItemRangeInserted(it.count() - PAGE_SIZE, it.count())
 
-                loadMoreListener.resetLoading()
-            }
-        })
-
-        searchViewModel.showViewAction.observe(viewLifecycleOwner, {
+        searchViewModel.viewAction.observe(viewLifecycleOwner, {
             it.getContentIfNotHandled()?.let { event ->
                 when (event) {
-                    SearchViewModel.EVENT_SHOW_EMPTY_VIEW -> showEmptyView()
-                    SearchViewModel.EVENT_HIDE_KEYBOARD -> hideKeyboard()
-                    SearchViewModel.EVENT_CLEAR_LIST -> clearList()
+                    is SearchViewEvent.ShowHistoryView -> showSearchHistoryView()
+                    is SearchViewEvent.ShowEmptyView -> showEmptyView()
+                    is SearchViewEvent.ShowResultView -> showResultView()
+                    is SearchViewEvent.HideKeyboard -> hideKeyboard()
                 }
             }
         })
     }
 
     private fun showEmptyView() {
+        val fragment = childFragmentManager.findFragmentByTag(SearchEmptyFragment.javaClass.simpleName)
 
+        childFragmentManager.commit {
+            replace(binding.fcvSearchContainer.id, fragment ?: SearchEmptyFragment.newInstance(), SearchEmptyFragment.javaClass.simpleName)
+        }
     }
 
-    private fun clearList() {
-        (binding.rvSearch.adapter as BookAdapter).apply {
-            submitList(null)
-            notifyDataSetChanged()
+
+    private fun showResultView() {
+        childFragmentManager.commit {
+            replace(binding.fcvSearchContainer.id, SearchResultFragment.newInstance())
+        }
+    }
+
+
+    private fun showSearchHistoryView() {
+        childFragmentManager.commit {
+            replace(binding.fcvSearchContainer.id, SearchHistoryFragment.newInstance())
         }
     }
 
