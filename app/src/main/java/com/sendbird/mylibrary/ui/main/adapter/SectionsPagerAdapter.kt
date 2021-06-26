@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.sendbird.mylibrary.ui.main.bookmark.BookMarkFragment
 import com.sendbird.mylibrary.ui.main.new_books.NewFragment
-import com.sendbird.mylibrary.ui.main.search.SearchFragment
+import com.sendbird.mylibrary.ui.main.search_books.SearchFragment
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to

@@ -9,12 +9,10 @@ import com.sendbird.mylibrary.core.binding.binding
 import com.sendbird.mylibrary.data.remote.model.Book
 import com.sendbird.mylibrary.databinding.ViewholderBookBinding
 import com.sendbird.mylibrary.ui.main.viewholder.BookViewHolder
-import timber.log.Timber
 
 class BookAdapter() : ListAdapter<Book, BaseViewHolder<*, *>>(diffUtil) {
     override fun onBindViewHolder(holder: BaseViewHolder<*, *>, position: Int) {
         (holder as BookViewHolder).bind(getItem(position))
-        Timber.e("sjh bind $position ${getItem(position)}")
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*, *> {

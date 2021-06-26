@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.sendbird.mylibrary.ui.main.search_books.SearchViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        tools:context=".ui.main.search_books.search_history.SearchHistoryFragment">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_search_history_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/search_history_recent_search_history"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/tv_search_history_clear"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_search_history_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="end"
+            android:onClick="@{() -> viewModel.onClearSearchHistoryClick()}"
+            android:text="@string/search_history_clear_all"
+            android:textColor="#666666"
+            app:layout_constraintBaseline_toBaselineOf="@id/tv_search_history_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_search_history_title"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_search_history"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="8dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_search_history_title"
+            tools:listitem="@layout/viewholder_search_history_item" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
