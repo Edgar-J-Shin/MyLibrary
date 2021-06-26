@@ -47,7 +47,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
 
     private fun observeViewModel() {
 
-        searchViewModel.viewAction.observe(viewLifecycleOwner, {
+        searchViewModel.viewEvent.observe(viewLifecycleOwner, {
             it.getContentIfNotHandled()?.let { event ->
                 when (event) {
                     is SearchViewEvent.ShowHistoryView -> showSearchHistoryView()

@@ -20,9 +20,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:onClick="@{() -> viewHolder.onClickBookDetails()}"
         android:paddingStart="16dp"
         android:paddingTop="10dp"
         android:paddingEnd="16dp"

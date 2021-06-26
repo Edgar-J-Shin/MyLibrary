@@ -1,12 +1,23 @@
 package com.sendbird.mylibrary.core.base
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.sendbird.mylibrary.core.util.Event
 import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseViewModel : ViewModel() {
 
     protected val compositeDisposable: CompositeDisposable by lazy {
         CompositeDisposable()
+    }
+
+    private val _viewEvent = MutableLiveData<Event<Any>>()
+    val viewEvent: LiveData<Event<Any>>
+        get() = _viewEvent
+
+    fun viewEvent(content: Any) {
+        _viewEvent.value = Event(content)
     }
 
     override fun onCleared() {

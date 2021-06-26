@@ -3,6 +3,7 @@ package com.sendbird.mylibrary.repository
 import com.google.gson.JsonObject
 import com.sendbird.mylibrary.core.util.SchedulersFacade
 import com.sendbird.mylibrary.data.remote.model.Book
+import com.sendbird.mylibrary.data.remote.model.RespDetailBook
 import com.sendbird.mylibrary.data.remote.model.RespNewBooks
 import com.sendbird.mylibrary.data.remote.service.MainService
 import io.reactivex.Maybe
@@ -20,7 +21,8 @@ class MainRepositoryImpl @Inject constructor(private val mainService: MainServic
             .map { it.books }
             .subscribeOn(SchedulersFacade.IO)
 
-    override fun fetchDetail(isbn13: String): Single<JsonObject> {
-        TODO("Not yet implemented")
-    }
+    override fun fetchDetail(isbn13: String): Maybe<RespDetailBook> =
+        mainService.fetchDetail(isbn13)
+            .filter { it.error == "0" }
+            .subscribeOn(SchedulersFacade.IO)
 }

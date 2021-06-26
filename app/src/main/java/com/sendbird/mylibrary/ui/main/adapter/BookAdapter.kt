@@ -4,20 +4,23 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.sendbird.mylibrary.R
-import com.sendbird.mylibrary.core.base.BaseViewHolder
 import com.sendbird.mylibrary.core.binding.binding
 import com.sendbird.mylibrary.data.remote.model.Book
 import com.sendbird.mylibrary.databinding.ViewholderBookBinding
 import com.sendbird.mylibrary.ui.main.viewholder.BookViewHolder
 
-class BookAdapter() : ListAdapter<Book, BaseViewHolder<*, *>>(diffUtil) {
-    override fun onBindViewHolder(holder: BaseViewHolder<*, *>, position: Int) {
-        (holder as BookViewHolder).bind(getItem(position))
+class BookAdapter(val showDetails: (String) -> Unit) : ListAdapter<Book, BookViewHolder>(diffUtil) {
+    override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
+        holder.bind(getItem(position))
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*, *> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         val binding = parent.binding<ViewholderBookBinding>(R.layout.viewholder_book)
-        return BookViewHolder(binding)
+        return BookViewHolder(binding).apply {
+            itemView.setOnClickListener {
+                showDetails(getItem(layoutPosition).isbn13)
+            }
+        }
     }
 
     companion object {
