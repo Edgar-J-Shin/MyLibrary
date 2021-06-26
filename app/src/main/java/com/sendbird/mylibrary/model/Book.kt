@@ -1,4 +1,4 @@
-package com.sendbird.mylibrary.data.remote.model
+package com.sendbird.mylibrary.model
 
 data class Book(
     val image: String,

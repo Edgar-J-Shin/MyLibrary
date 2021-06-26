@@ -1,6 +1,6 @@
 package com.sendbird.mylibrary.repository
 
-import com.sendbird.mylibrary.data.remote.model.Book
+import com.sendbird.mylibrary.model.Book
 import com.sendbird.mylibrary.data.remote.model.RespDetailBook
 import com.sendbird.mylibrary.data.remote.model.RespNewBooks
 import io.reactivex.Maybe

@@ -1,8 +1,7 @@
 package com.sendbird.mylibrary.repository
 
-import com.google.gson.JsonObject
 import com.sendbird.mylibrary.core.util.SchedulersFacade
-import com.sendbird.mylibrary.data.remote.model.Book
+import com.sendbird.mylibrary.model.Book
 import com.sendbird.mylibrary.data.remote.model.RespDetailBook
 import com.sendbird.mylibrary.data.remote.model.RespNewBooks
 import com.sendbird.mylibrary.data.remote.service.MainService

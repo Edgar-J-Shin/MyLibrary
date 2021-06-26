@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.sendbird.mylibrary.MyLibraryApp
 import com.sendbird.mylibrary.core.base.BaseViewModel
 import com.sendbird.mylibrary.core.util.SchedulersFacade
-import com.sendbird.mylibrary.data.remote.model.Book
+import com.sendbird.mylibrary.model.Book
 import com.sendbird.mylibrary.repository.MainRepository
 import com.sendbird.mylibrary.ui.main.search_books.search_history.data.SearchHistoryItem
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,11 +32,6 @@ class SearchViewModel @Inject constructor(private val mainRepository: MainReposi
     private val _history: MutableLiveData<MutableList<SearchHistoryItem>> = MutableLiveData()
     val history: LiveData<MutableList<SearchHistoryItem>>
         get() = _history
-
-//    // Event : View Action for SearchViewEvent
-//    private val _viewAction = MutableLiveData<Event<SearchViewEvent>>()
-//    val viewAction: LiveData<Event<SearchViewEvent>>
-//        get() = _viewAction
 
     init {
         // 처음 진입 시, 기존에 검색했던 키워드 리스트를 보여준다.

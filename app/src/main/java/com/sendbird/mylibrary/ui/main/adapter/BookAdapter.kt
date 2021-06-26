@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.sendbird.mylibrary.R
 import com.sendbird.mylibrary.core.binding.binding
-import com.sendbird.mylibrary.data.remote.model.Book
+import com.sendbird.mylibrary.model.Book
 import com.sendbird.mylibrary.databinding.ViewholderBookBinding
 import com.sendbird.mylibrary.ui.main.viewholder.BookViewHolder
 

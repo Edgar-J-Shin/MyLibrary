@@ -1,6 +1,7 @@
 package com.sendbird.mylibrary.ui.detail
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.viewModels
 import com.sendbird.mylibrary.R
 import com.sendbird.mylibrary.core.base.BaseActivity
@@ -20,6 +21,12 @@ class DetailBookActivity : BaseActivity<ActivityDetailBookBinding>(R.layout.acti
             viewModel = this@DetailBookActivity.detailBookViewModel
         }
 
+        // 액션바 설정
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            title = getString(R.string.detail_title)
+        }
+
         observeViewModel()
 
         intent?.getStringExtra(INTENT_EXTRA_ISBN13)?.let {
@@ -30,6 +37,17 @@ class DetailBookActivity : BaseActivity<ActivityDetailBookBinding>(R.layout.acti
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            // 액션바의 뒤로가기 버튼 동작
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun observeViewModel() {
 
         detailBookViewModel.viewEvent.observe(this, {
@@ -37,6 +55,12 @@ class DetailBookActivity : BaseActivity<ActivityDetailBookBinding>(R.layout.acti
 //                when (event) {
 //
 //                }
+            }
+        })
+
+        detailBookViewModel.detailBook.observe(this, {
+            binding.apply {
+                item = it
             }
         })
     }

@@ -3,7 +3,7 @@ package com.sendbird.mylibrary.ui.main.new_books
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.sendbird.mylibrary.core.base.BaseViewModel
-import com.sendbird.mylibrary.data.remote.model.Book
+import com.sendbird.mylibrary.model.Book
 import com.sendbird.mylibrary.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
