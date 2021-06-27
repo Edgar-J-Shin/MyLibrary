@@ -56,7 +56,7 @@ class BookEntity(
     }
 }
 
-fun BookEntity.mapToProduct(): Book = Book(
+fun BookEntity.mapToBook(): Book = Book(
     image,
     isbn13,
     price,
