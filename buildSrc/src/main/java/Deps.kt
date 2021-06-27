@@ -77,6 +77,7 @@ object Deps {
             const val rxJava = "io.reactivex.rxjava2:rxjava:${Versions.rxJava}"
             const val rxAndroid = "io.reactivex.rxjava2:rxandroid:${Versions.rxAndroid}"
             const val rxKotlin = "io.reactivex.rxjava2:rxkotlin:${Versions.rxKotlin}"
+            const val rxRoom = "androidx.room:room-rxjava2:${Versions.rxRoom}"
         }
 
         /**

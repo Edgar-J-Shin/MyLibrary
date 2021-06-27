@@ -1,6 +1,6 @@
 package com.sendbird.mylibrary.data.remote.service
 
-import com.google.gson.JsonObject
+import com.sendbird.mylibrary.data.remote.model.RespDetailBook
 import com.sendbird.mylibrary.data.remote.model.RespNewBooks
 import com.sendbird.mylibrary.data.remote.model.RespSearchBooks
 import io.reactivex.Maybe
@@ -8,7 +8,7 @@ import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface MainService {
+interface SearchService {
 
     /**
      * 새로운 서적 리스트를 가져온다
@@ -38,5 +38,5 @@ interface MainService {
     @GET("books/{isbn13}")
     fun fetchDetail(
         @Path("isbn13") isbn13: String
-    ): Single<JsonObject>
+    ): Maybe<RespDetailBook>
 }

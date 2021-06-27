@@ -4,10 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.sendbird.mylibrary.MyLibraryApp
 import com.sendbird.mylibrary.core.base.BaseViewModel
-import com.sendbird.mylibrary.core.util.Event
 import com.sendbird.mylibrary.core.util.SchedulersFacade
-import com.sendbird.mylibrary.data.remote.model.Book
-import com.sendbird.mylibrary.repository.MainRepository
+import com.sendbird.mylibrary.model.Book
+import com.sendbird.mylibrary.repository.SearchRepository
 import com.sendbird.mylibrary.ui.main.search_books.search_history.data.SearchHistoryItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Completable
@@ -17,7 +16,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(private val mainRepository: MainRepository) : BaseViewModel() {
+class SearchViewModel @Inject constructor(private val searchRepository: SearchRepository) : BaseViewModel() {
 
     // Data : input text
     val _keyword: MutableLiveData<String> = MutableLiveData()
@@ -34,11 +33,6 @@ class SearchViewModel @Inject constructor(private val mainRepository: MainReposi
     val history: LiveData<MutableList<SearchHistoryItem>>
         get() = _history
 
-    // Event : View Action for SearchViewEvent
-    private val _viewAction = MutableLiveData<Event<SearchViewEvent>>()
-    val viewAction: LiveData<Event<SearchViewEvent>>
-        get() = _viewAction
-
     init {
         // 처음 진입 시, 기존에 검색했던 키워드 리스트를 보여준다.
         getSearchHistory()
@@ -49,8 +43,8 @@ class SearchViewModel @Inject constructor(private val mainRepository: MainReposi
         if (keyword.value?.isNotEmpty() == true) {
             searchBooks()
         } else {
-            _viewAction.value = Event(SearchViewEvent.HideKeyboard)
-            _viewAction.value = Event(SearchViewEvent.ShowHistoryView)
+            viewEvent(SearchViewEvent.HideKeyboard)
+            viewEvent(SearchViewEvent.ShowHistoryView)
         }
     }
 
@@ -62,7 +56,7 @@ class SearchViewModel @Inject constructor(private val mainRepository: MainReposi
     fun onKeywordChanged(text: CharSequence) {
         // Input Edit Text에 아무것도 입력되지 않았을 경우에는 History View를 보여준다.
         if (text.isEmpty()) {
-            _viewAction.value = Event(SearchViewEvent.ShowHistoryView)
+            viewEvent(SearchViewEvent.ShowHistoryView)
         }
     }
 
@@ -85,7 +79,7 @@ class SearchViewModel @Inject constructor(private val mainRepository: MainReposi
             .subscribeOn(SchedulersFacade.IO)
             .doOnSubscribe {
                 // 검색 히스토리 요청 시 Show History View 요청을 한다.
-                _viewAction.value = Event(SearchViewEvent.ShowHistoryView)
+                viewEvent(SearchViewEvent.ShowHistoryView)
             }
             .observeOn(SchedulersFacade.UI)
             .map { history -> history.map { SearchHistoryItem(it) } }
@@ -163,15 +157,15 @@ class SearchViewModel @Inject constructor(private val mainRepository: MainReposi
             finalRequestKeyword = keyword.value ?: ""
         }
 
-        compositeDisposable += mainRepository.fetchSearch(finalRequestKeyword, page.toString())
+        compositeDisposable += searchRepository.fetchSearch(finalRequestKeyword, page.toString())
             .observeOn(SchedulersFacade.UI)
             .doOnSubscribe {
                 // 검색 요청 시 키보드를 내린다.
-                _viewAction.value = Event(SearchViewEvent.HideKeyboard)
+                viewEvent(SearchViewEvent.HideKeyboard)
                 // 새로운 검색 요청 시 동작
                 if (page == 1) {
                     // Show Result View 요청을 한다.
-                    _viewAction.value = Event(SearchViewEvent.ShowResultView)
+                    viewEvent(SearchViewEvent.ShowResultView)
                     // 요청한 keyword를 저장한다.
                     insertSearchHistory(finalRequestKeyword)
                 }
@@ -195,7 +189,7 @@ class SearchViewModel @Inject constructor(private val mainRepository: MainReposi
                     }
                 } else {
                     // 검색 결과가 없을 경우 Empty View를 보여준다.
-                    _viewAction.value = Event(SearchViewEvent.ShowEmptyView)
+                    viewEvent(SearchViewEvent.ShowEmptyView)
                 }
             }) {
                 Timber.e("error ${it.message}")
