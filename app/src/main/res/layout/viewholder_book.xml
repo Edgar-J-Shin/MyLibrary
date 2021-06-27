@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="book"
+            type="com.sendbird.mylibrary.model.Book" />
+
+        <variable
+            name="viewHolder"
+            type="com.sendbird.mylibrary.ui.main.viewholder.BookViewHolder" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:paddingStart="16dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="10dp">
+
+        <!-- 이미지 -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_book_image"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            bind:glideUrl="@{book.image}" />
+
+        <!-- 제목 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_book_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{book.title}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_book_image" />
+
+        <!-- 부제 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_book_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{book.subtitle}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_book_title" />
+
+        <!-- 가격 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_book_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.format(@string/book_price, book.price)}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_book_subtitle" />
+
+        <!-- isbn13 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_book_isbn13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@{String.format(@string/book_isbn13, book.isbn13)}"
+            app:layout_constraintTop_toBottomOf="@id/tv_book_price" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

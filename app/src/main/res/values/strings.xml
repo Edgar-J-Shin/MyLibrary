@@ -1,3 +1,32 @@
 <resources>
     <string name="app_name">My Library</string>
+    <string name="loading_message">Please wait …</string>
+    <string name="dialog_error_title">Error</string>
+    <string name="dialog_error_ok">OK</string>
+
+    <!-- Main Tab -->
+    <string name="tab_title_1">New</string>
+    <string name="tab_title_2">Search</string>
+    <string name="tab_title_3">BookMark</string>
+
+    <!-- Search -->
+    <string name="search_hint">Search for books</string>
+    <string name="search_empty">No results found.</string>
+    <string name="search_history_recent_search_history">Recent Search History</string>
+    <string name="search_history_clear_all">Clear All</string>
+
+    <!-- Bookmark -->
+    <string name="filter_alphabet_asc">알파벳(오름차순)</string>
+    <string name="filter_alphabet_desc">알파벳(내림차순)</string>
+    <string name="filter_price_asc">가격(오름차순)</string>
+    <string name="filter_price_desc">가격(내림차순)</string>
+
+    <!-- Detail -->
+    <string name="detail_title">Details</string>
+    <string name="detail_info">Title: %s\nSubTitle:%s\nAuthors:%s\npublisher:%s\nlanguage:%s\nisbn10:%s\nisbn13:%s\npages:%s\nyear:%s\nrating:%s\ndesc:%s\nprice:%s\nurl:%s\npdfUrl:%s\n</string>
+
+    <!-- Book -->
+    <string name="book_price">"Price: %s"</string>
+    <string name="book_isbn13">"Isbn13: %s"</string>
+
 </resources>

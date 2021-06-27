@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.sendbird.mylibrary.model.DetailBook" />
+
+        <variable
+            name="viewModel"
+            type="com.sendbird.mylibrary.ui.detail.DetailBookViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.detail.DetailBookActivity">
+
+        <!-- 이미지 -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_detail_image"
+            android:layout_width="0dp"
+            android:layout_height="240dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            bind:glideUrl="@{item.image}" />
+
+        <!-- 북마크 -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_detail_bookmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{() -> viewModel.onClickBookmarkButton(item)}"
+            android:padding="12dp"
+            android:src="@{viewModel.bookmark ? @drawable/baseline_bookmark_black_24 : @drawable/baseline_bookmark_border_black_24}"
+            app:layout_constraintEnd_toEndOf="@id/iv_detail_image"
+            app:layout_constraintTop_toTopOf="@id/iv_detail_image" />
+
+        <!-- 정보 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_detail_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{String.format(@string/detail_info, item.title, item.subtitle, item.authors, item.publisher, item.language, item.isbn10, item.isbn13, item.pages, item.year, item.rating, item.desc, item.price, item.url, item.pdf)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_detail_image" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
