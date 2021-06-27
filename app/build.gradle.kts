@@ -39,10 +39,6 @@ android {
     buildFeatures {
         dataBinding = true
     }
-
-    android {
-        
-    }
 }
 
 dependencies {
@@ -87,6 +83,7 @@ dependencies {
         implementation(rxJava)
         implementation(rxAndroid)
         implementation(rxKotlin)
+        implementation(rxRoom)
     }
 
     with(Deps.Lib.Json) {

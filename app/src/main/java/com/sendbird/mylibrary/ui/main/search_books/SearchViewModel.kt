@@ -6,7 +6,7 @@ import com.sendbird.mylibrary.MyLibraryApp
 import com.sendbird.mylibrary.core.base.BaseViewModel
 import com.sendbird.mylibrary.core.util.SchedulersFacade
 import com.sendbird.mylibrary.model.Book
-import com.sendbird.mylibrary.repository.MainRepository
+import com.sendbird.mylibrary.repository.SearchRepository
 import com.sendbird.mylibrary.ui.main.search_books.search_history.data.SearchHistoryItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Completable
@@ -16,7 +16,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(private val mainRepository: MainRepository) : BaseViewModel() {
+class SearchViewModel @Inject constructor(private val searchRepository: SearchRepository) : BaseViewModel() {
 
     // Data : input text
     val _keyword: MutableLiveData<String> = MutableLiveData()
@@ -157,7 +157,7 @@ class SearchViewModel @Inject constructor(private val mainRepository: MainReposi
             finalRequestKeyword = keyword.value ?: ""
         }
 
-        compositeDisposable += mainRepository.fetchSearch(finalRequestKeyword, page.toString())
+        compositeDisposable += searchRepository.fetchSearch(finalRequestKeyword, page.toString())
             .observeOn(SchedulersFacade.UI)
             .doOnSubscribe {
                 // 검색 요청 시 키보드를 내린다.

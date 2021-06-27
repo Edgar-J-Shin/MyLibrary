@@ -6,7 +6,7 @@ import com.sendbird.mylibrary.data.remote.model.RespNewBooks
 import io.reactivex.Maybe
 import io.reactivex.Single
 
-interface MainRepository {
+interface SearchRepository {
 
     fun fetchNew(): Single<RespNewBooks>
 

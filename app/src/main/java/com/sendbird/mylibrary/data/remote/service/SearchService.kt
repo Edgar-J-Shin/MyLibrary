@@ -8,7 +8,7 @@ import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface MainService {
+interface SearchService {
 
     /**
      * 새로운 서적 리스트를 가져온다

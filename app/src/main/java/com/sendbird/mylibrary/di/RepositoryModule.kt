@@ -1,7 +1,9 @@
 package com.sendbird.mylibrary.di
 
-import com.sendbird.mylibrary.repository.MainRepository
-import com.sendbird.mylibrary.repository.MainRepositoryImpl
+import com.sendbird.mylibrary.repository.BookmarkRepository
+import com.sendbird.mylibrary.repository.BookmarkRepositoryImpl
+import com.sendbird.mylibrary.repository.SearchRepository
+import com.sendbird.mylibrary.repository.SearchRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -12,5 +14,8 @@ import dagger.hilt.android.components.ViewModelComponent
 abstract class RepositoryModule {
 
     @Binds
-    abstract fun bindMainRepository(mainRepositoryImpl: MainRepositoryImpl): MainRepository
+    abstract fun bindSearchRepository(searchRepositoryImpl: SearchRepositoryImpl): SearchRepository
+
+    @Binds
+    abstract fun bindBookmarkRepository(bookmarkRepositoryImpl: BookmarkRepositoryImpl): BookmarkRepository
 }

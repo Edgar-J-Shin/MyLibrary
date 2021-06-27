@@ -11,7 +11,6 @@ import androidx.fragment.app.commit
 import com.sendbird.mylibrary.R
 import com.sendbird.mylibrary.core.base.BaseFragment
 import com.sendbird.mylibrary.databinding.FragmentSearchBinding
-import com.sendbird.mylibrary.ui.main.MainViewModel
 import com.sendbird.mylibrary.ui.main.search_books.search_empty.SearchEmptyFragment
 import com.sendbird.mylibrary.ui.main.search_books.search_history.SearchHistoryFragment
 import com.sendbird.mylibrary.ui.main.search_books.search_result.SearchResultFragment

@@ -56,6 +56,7 @@ object Versions {
     const val rxJava = "2.2.21"
     const val rxAndroid = "2.1.1"
     const val rxKotlin = "2.4.0"
+    const val rxRoom = "2.3.0"
 
     // json
     const val gson = "2.8.6"

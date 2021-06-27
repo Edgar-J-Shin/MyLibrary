@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.sendbird.mylibrary.core.base.BaseViewModel
 import com.sendbird.mylibrary.model.Book
-import com.sendbird.mylibrary.repository.MainRepository
+import com.sendbird.mylibrary.repository.SearchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
@@ -12,7 +12,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class NewViewModel @Inject constructor(private val mainRepository: MainRepository) : BaseViewModel() {
+class NewViewModel @Inject constructor(private val searchRepository: SearchRepository) : BaseViewModel() {
 
     init {
 //        getNewBooks()
@@ -29,7 +29,7 @@ class NewViewModel @Inject constructor(private val mainRepository: MainRepositor
     // Request
     fun getNewBooks() {
         // 전체 리스트 요청 이벤트 처리
-        compositeDisposable += mainRepository.fetchNew()
+        compositeDisposable += searchRepository.fetchNew()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 if (it.error == "0") {

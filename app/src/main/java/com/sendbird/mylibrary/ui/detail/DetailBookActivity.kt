@@ -21,7 +21,7 @@ class DetailBookActivity : BaseActivity<ActivityDetailBookBinding>(R.layout.acti
             viewModel = this@DetailBookActivity.detailBookViewModel
         }
 
-        // 액션바 설정
+        // 액션바 타이틀, 백버튼 설정
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             title = getString(R.string.detail_title)
@@ -29,6 +29,7 @@ class DetailBookActivity : BaseActivity<ActivityDetailBookBinding>(R.layout.acti
 
         observeViewModel()
 
+        // intent 처리
         intent?.getStringExtra(INTENT_EXTRA_ISBN13)?.let {
             detailBookViewModel.getDetailBook(it)
         } ?: kotlin.run {
@@ -49,15 +50,6 @@ class DetailBookActivity : BaseActivity<ActivityDetailBookBinding>(R.layout.acti
     }
 
     private fun observeViewModel() {
-
-        detailBookViewModel.viewEvent.observe(this, {
-            it.getContentIfNotHandled()?.let { event ->
-//                when (event) {
-//
-//                }
-            }
-        })
-
         detailBookViewModel.detailBook.observe(this, {
             binding.apply {
                 item = it
@@ -66,6 +58,6 @@ class DetailBookActivity : BaseActivity<ActivityDetailBookBinding>(R.layout.acti
     }
 
     companion object {
-        val INTENT_EXTRA_ISBN13 = "intent_extra_isbn13"
+        const val INTENT_EXTRA_ISBN13 = "intent_extra_isbn13"
     }
 }
