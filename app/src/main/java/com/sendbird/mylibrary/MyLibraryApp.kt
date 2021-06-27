@@ -8,6 +8,7 @@ class MyLibraryApp : Application() {
 
     companion object {
         private val recentlyKeywords: MutableList<String> = mutableListOf()
+
         fun insertKeyword(keyword: String) {
             recentlyKeywords.add(keyword)
         }

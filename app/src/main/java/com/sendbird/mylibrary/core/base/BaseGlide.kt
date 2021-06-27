@@ -31,7 +31,7 @@ class BaseGlide : AppGlideModule() {
 
         builder.setBitmapPool(LruBitmapPool(bitmapPoolSize.toLong()))
             .setMemoryCache(LruResourceCache(memoryCacheSize.toLong()))
-            .setDiskCache(InternalCacheDiskCacheFactory(context, "staypia_image_disk_cache", diskCacheSize.toLong()))
+            .setDiskCache(InternalCacheDiskCacheFactory(context, "mylibrary_image_disk_cache", diskCacheSize.toLong()))
             .setDefaultRequestOptions(requestOptions)
             .setLogLevel(Log.DEBUG)
     }

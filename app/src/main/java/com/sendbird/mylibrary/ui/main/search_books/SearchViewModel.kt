@@ -6,9 +6,9 @@ import com.sendbird.mylibrary.MyLibraryApp
 import com.sendbird.mylibrary.core.base.BaseViewModel
 import com.sendbird.mylibrary.core.util.SchedulersFacade
 import com.sendbird.mylibrary.model.Book
+import com.sendbird.mylibrary.model.SearchHistoryItem
 import com.sendbird.mylibrary.repository.SearchRepository
 import com.sendbird.mylibrary.ui.ViewEvent
-import com.sendbird.mylibrary.ui.main.search_books.search_history.data.SearchHistoryItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Completable
 import io.reactivex.Single
