@@ -12,16 +12,13 @@ import javax.inject.Inject
 class SearchRepositoryImpl @Inject constructor(private val searchService: SearchService) : SearchRepository {
     override fun fetchNew(): Single<RespNewBooks> =
         searchService.fetchNew()
-            .subscribeOn(SchedulersFacade.IO)
 
     override fun fetchSearch(query: String, page: String): Maybe<List<Book>> =
         searchService.fetchSearch(query, page)
             .filter { it.error == "0" }
             .map { it.books }
-            .subscribeOn(SchedulersFacade.IO)
 
     override fun fetchDetail(isbn13: String): Maybe<RespDetailBook> =
         searchService.fetchDetail(isbn13)
             .filter { it.error == "0" }
-            .subscribeOn(SchedulersFacade.IO)
 }

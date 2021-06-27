@@ -4,6 +4,4 @@ sealed class SearchViewEvent {
     object ShowEmptyView : SearchViewEvent()
     object ShowResultView : SearchViewEvent()
     object ShowHistoryView : SearchViewEvent()
-
-    object HideKeyboard : SearchViewEvent()
 }

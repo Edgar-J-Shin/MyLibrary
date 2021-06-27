@@ -12,10 +12,12 @@ abstract class BaseViewModel : ViewModel() {
         CompositeDisposable()
     }
 
+    // View Event 처리를 위한 LiveData
     private val _viewEvent = MutableLiveData<Event<Any>>()
     val viewEvent: LiveData<Event<Any>>
         get() = _viewEvent
 
+    // View Event 호출
     fun viewEvent(content: Any) {
         _viewEvent.value = Event(content)
     }

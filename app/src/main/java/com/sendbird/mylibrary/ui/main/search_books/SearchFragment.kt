@@ -11,6 +11,7 @@ import androidx.fragment.app.commit
 import com.sendbird.mylibrary.R
 import com.sendbird.mylibrary.core.base.BaseFragment
 import com.sendbird.mylibrary.databinding.FragmentSearchBinding
+import com.sendbird.mylibrary.ui.ViewEvent
 import com.sendbird.mylibrary.ui.main.search_books.search_empty.SearchEmptyFragment
 import com.sendbird.mylibrary.ui.main.search_books.search_history.SearchHistoryFragment
 import com.sendbird.mylibrary.ui.main.search_books.search_result.SearchResultFragment
@@ -32,6 +33,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
 
         setupKeyboardEvent()
         observeViewModel()
+
+        showLoadingView()
     }
 
     private fun setupKeyboardEvent() {
@@ -52,7 +55,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
                     is SearchViewEvent.ShowHistoryView -> showSearchHistoryView()
                     is SearchViewEvent.ShowEmptyView -> showEmptyView()
                     is SearchViewEvent.ShowResultView -> showResultView()
-                    is SearchViewEvent.HideKeyboard -> hideKeyboard()
+                    is ViewEvent.HideKeyboard -> hideKeyboard()
+                    is ViewEvent.ShowLoadingView -> showLoadingView()
+                    is ViewEvent.HideLoadingView -> hideLoadingView()
+                    is ViewEvent.ShowErrorDialog -> showErrorDialog(event.throwable)
                 }
             }
         })

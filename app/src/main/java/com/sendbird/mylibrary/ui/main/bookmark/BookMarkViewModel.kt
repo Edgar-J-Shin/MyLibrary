@@ -9,20 +9,18 @@ import com.sendbird.mylibrary.model.Book
 import com.sendbird.mylibrary.model.mapToBookEntity
 import com.sendbird.mylibrary.repository.BookmarkRepository
 import com.sendbird.mylibrary.repository.FILTER_TYPE
-import com.sendbird.mylibrary.repository.SearchRepository
+import com.sendbird.mylibrary.ui.ViewEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxkotlin.plusAssign
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class BookMarkViewModel @Inject constructor(
-    private val searchRepository: SearchRepository,
     private val bookmarkRepository: BookmarkRepository
 ) : BaseViewModel() {
 
     // Data : Filter type data
-    private val _filterType: MutableLiveData<FILTER_TYPE> = MutableLiveData(FILTER_TYPE.NONE)
+    private val _filterType: MutableLiveData<FILTER_TYPE> = MutableLiveData(FILTER_TYPE.ALPHABET_ASC)
     val filterType: LiveData<FILTER_TYPE>
         get() = _filterType
 
@@ -48,10 +46,12 @@ class BookMarkViewModel @Inject constructor(
             .subscribeOn(SchedulersFacade.IO)
             .map { bookmarks -> bookmarks.map { it.mapToBook() } }
             .observeOn(SchedulersFacade.UI)
+            .doOnSubscribe { viewEvent(ViewEvent.ShowLoadingView) }
+            .doOnEvent { _, _ -> viewEvent(ViewEvent.HideLoadingView) }
             .subscribe({
                 _books.value = it.toMutableList()
             }) {
-                Timber.e("error ${it.message}")
+                viewEvent(ViewEvent.ShowErrorDialog(it))
             }
     }
 
@@ -62,7 +62,7 @@ class BookMarkViewModel @Inject constructor(
             .observeOn(SchedulersFacade.UI)
             .subscribe({
             }) {
-                Timber.e("error ${it.message}")
+                viewEvent(ViewEvent.ShowErrorDialog(it))
             }
     }
 
@@ -72,7 +72,7 @@ class BookMarkViewModel @Inject constructor(
             .subscribeOn(SchedulersFacade.IO)
             .observeOn(SchedulersFacade.UI)
             .subscribe({}) {
-                Timber.e("error ${it.message}")
+                viewEvent(ViewEvent.ShowErrorDialog(it))
             }
     }
 }

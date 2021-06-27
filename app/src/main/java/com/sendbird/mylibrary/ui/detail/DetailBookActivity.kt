@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import com.sendbird.mylibrary.R
 import com.sendbird.mylibrary.core.base.BaseActivity
 import com.sendbird.mylibrary.databinding.ActivityDetailBookBinding
+import com.sendbird.mylibrary.ui.ViewEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -50,6 +51,17 @@ class DetailBookActivity : BaseActivity<ActivityDetailBookBinding>(R.layout.acti
     }
 
     private fun observeViewModel() {
+        // 필터 뷰
+        detailBookViewModel.viewEvent.observe(this, {
+            it.getContentIfNotHandled()?.let { event ->
+                when (event) {
+                    is ViewEvent.ShowLoadingView -> showLoadingView()
+                    is ViewEvent.HideLoadingView -> hideLoadingView()
+                    is ViewEvent.ShowErrorDialog -> showErrorDialog(event.throwable)
+                }
+            }
+        })
+
         detailBookViewModel.detailBook.observe(this, {
             binding.apply {
                 item = it

@@ -8,15 +8,15 @@ interface BookmarkRepository {
 
     fun getBookmarkListBySort(filterType: FILTER_TYPE): Single<List<BookEntity>>
 
-    fun getBookmarkByIsbn13(isbn13:String) : Single<List<BookEntity>>
+    fun getBookmarkByIsbn13(isbn13: String): Single<List<BookEntity>>
 
     fun insertBookmark(bookEntity: BookEntity): Single<Long>
 
     fun deleteBookmark(bookEntity: BookEntity): Completable
 
-    fun deleteBookmarkByIsbn13(isbn13:String): Completable
+    fun deleteBookmarkByIsbn13(isbn13: String): Completable
 }
 
 enum class FILTER_TYPE {
-    NONE, PRICE_ASC, PRICE_DESC, ALPHABET_ASC, ALPHABET_DESC
+    PRICE_ASC, PRICE_DESC, ALPHABET_ASC, ALPHABET_DESC
 }

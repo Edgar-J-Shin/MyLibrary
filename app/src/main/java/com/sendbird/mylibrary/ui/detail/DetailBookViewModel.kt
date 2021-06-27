@@ -11,10 +11,10 @@ import com.sendbird.mylibrary.model.mapToBook
 import com.sendbird.mylibrary.model.mapToBookEntity
 import com.sendbird.mylibrary.repository.BookmarkRepository
 import com.sendbird.mylibrary.repository.SearchRepository
+import com.sendbird.mylibrary.ui.ViewEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Single
 import io.reactivex.rxkotlin.plusAssign
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -47,12 +47,15 @@ class DetailBookViewModel @Inject constructor(
     // Request : get Detail book information by isbn13 from remote
     fun getDetailBook(isbn13: String) {
         compositeDisposable += getDetailBookRequest(isbn13)
+            .subscribeOn(SchedulersFacade.IO)
             .observeOn(SchedulersFacade.UI)
+            .doOnSubscribe { viewEvent(ViewEvent.ShowLoadingView) }
+            .doOnEvent { _, _ -> viewEvent(ViewEvent.HideLoadingView) }
             .subscribe({
                 _detailBook.value = it.first
                 _bookmark.value = it.second
             }) {
-                Timber.e("error ${it.message}")
+                viewEvent(ViewEvent.ShowErrorDialog(it))
             }
     }
 
@@ -75,7 +78,7 @@ class DetailBookViewModel @Inject constructor(
             .observeOn(SchedulersFacade.UI)
             .subscribe({
             }) {
-                Timber.e("error ${it.message}")
+                viewEvent(ViewEvent.ShowErrorDialog(it))
             }
     }
 
@@ -85,7 +88,7 @@ class DetailBookViewModel @Inject constructor(
             .subscribeOn(SchedulersFacade.IO)
             .observeOn(SchedulersFacade.UI)
             .subscribe({}) {
-                Timber.e("error ${it.message}")
+                viewEvent(ViewEvent.ShowErrorDialog(it))
             }
     }
 }
