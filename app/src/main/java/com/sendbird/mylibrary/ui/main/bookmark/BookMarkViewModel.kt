@@ -35,13 +35,21 @@ class BookMarkViewModel @Inject constructor(
     val books: LiveData<List<Book>>
         get() = _books
 
-    private fun getBookmarkAll(filterType: FILTER_TYPE) {
+    init {
+        filterType.value?.let { getBookmarkAll(it) }
+    }
+
+    fun onClickFilterPicker() {
+        viewEvent(BookmarkViewEvent.ShowFilterView)
+    }
+
+    fun getBookmarkAll(filterType: FILTER_TYPE) {
         compositeDisposable += bookmarkRepository.getBookmarkListBySort(filterType)
             .subscribeOn(SchedulersFacade.IO)
             .map { bookmarks -> bookmarks.map { it.mapToBook() } }
             .observeOn(SchedulersFacade.UI)
             .subscribe({
-                Timber.e("sjh all : ${it.count()}")
+                _books.value = it.toMutableList()
             }) {
                 Timber.e("error ${it.message}")
             }

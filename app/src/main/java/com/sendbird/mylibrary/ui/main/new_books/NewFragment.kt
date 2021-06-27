@@ -17,7 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class NewFragment : BaseFragment<FragmentNewBinding>(R.layout.fragment_new) {
 
     private val newViewModel by viewModels<NewViewModel>()
-    private val mainViewModel by activityViewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +31,6 @@ class NewFragment : BaseFragment<FragmentNewBinding>(R.layout.fragment_new) {
         }
 
         setupRecyclerView()
-
         observeViewModel()
     }
 
