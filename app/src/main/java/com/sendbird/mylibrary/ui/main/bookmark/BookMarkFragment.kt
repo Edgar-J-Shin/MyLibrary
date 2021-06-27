@@ -8,6 +8,7 @@ import com.sendbird.mylibrary.R
 import com.sendbird.mylibrary.core.base.BaseFragment
 import com.sendbird.mylibrary.databinding.FragmentBookMarkBinding
 import com.sendbird.mylibrary.repository.FILTER_TYPE
+import com.sendbird.mylibrary.ui.ViewEvent
 import com.sendbird.mylibrary.ui.detail.DetailBookActivity
 import com.sendbird.mylibrary.ui.main.adapter.BookAdapter
 import com.sendbird.mylibrary.ui.view.showBottomSheetDialog
@@ -42,11 +43,14 @@ class BookMarkFragment : BaseFragment<FragmentBookMarkBinding>(R.layout.fragment
     }
 
     private fun observeViewModel() {
-        // 필터 뷰
+        // 뷰 이벤트 처리
         bookmarkViewModel.viewEvent.observe(viewLifecycleOwner, {
             it.getContentIfNotHandled()?.let { event ->
                 when (event) {
                     is BookmarkViewEvent.ShowFilterView -> showFilterView()
+                    is ViewEvent.ShowLoadingView -> showLoadingView()
+                    is ViewEvent.HideLoadingView -> hideLoadingView()
+                    is ViewEvent.ShowErrorDialog -> showErrorDialog(event.throwable)
                 }
             }
         })
@@ -58,7 +62,6 @@ class BookMarkFragment : BaseFragment<FragmentBookMarkBinding>(R.layout.fragment
                 FILTER_TYPE.ALPHABET_DESC -> getString(R.string.filter_alphabet_desc)
                 FILTER_TYPE.PRICE_ASC -> getString(R.string.filter_price_asc)
                 FILTER_TYPE.PRICE_DESC -> getString(R.string.filter_price_desc)
-                FILTER_TYPE.NONE -> ""
             }
 
             bookmarkViewModel.getBookmarkAll(it)

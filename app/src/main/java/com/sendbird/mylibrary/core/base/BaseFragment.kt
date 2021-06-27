@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.sendbird.mylibrary.core.binding.binding
 import com.sendbird.mylibrary.core.binding.initBinding
+import com.sendbird.mylibrary.ui.view.CustomLoadingDialog
 
 abstract class BaseFragment<T : ViewDataBinding> constructor(
     @LayoutRes private val layoutResId: Int
@@ -23,6 +25,26 @@ abstract class BaseFragment<T : ViewDataBinding> constructor(
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = binding(layoutResId, inflater, container)
         return binding.root
+    }
+
+    private val dialogCustom: CustomLoadingDialog by lazy { CustomLoadingDialog(requireContext()) }
+    protected fun showLoadingView() {
+        dialogCustom.show()
+    }
+
+    protected fun hideLoadingView() {
+        dialogCustom.hide()
+    }
+
+    protected fun showErrorDialog(throwable: Throwable) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Error")
+            .setMessage(throwable.message)
+            .setNegativeButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
 
     override fun onDestroyView() {

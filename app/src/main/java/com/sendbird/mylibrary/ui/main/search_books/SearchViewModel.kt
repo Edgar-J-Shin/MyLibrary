@@ -7,12 +7,12 @@ import com.sendbird.mylibrary.core.base.BaseViewModel
 import com.sendbird.mylibrary.core.util.SchedulersFacade
 import com.sendbird.mylibrary.model.Book
 import com.sendbird.mylibrary.repository.SearchRepository
+import com.sendbird.mylibrary.ui.ViewEvent
 import com.sendbird.mylibrary.ui.main.search_books.search_history.data.SearchHistoryItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.rxkotlin.plusAssign
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -43,7 +43,7 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
         if (keyword.value?.isNotEmpty() == true) {
             searchBooks()
         } else {
-            viewEvent(SearchViewEvent.HideKeyboard)
+            viewEvent(ViewEvent.HideKeyboard)
             viewEvent(SearchViewEvent.ShowHistoryView)
         }
     }
@@ -77,16 +77,19 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
             }
         }
             .subscribeOn(SchedulersFacade.IO)
+            .map { history -> history.map { SearchHistoryItem(it) } }
+            .observeOn(SchedulersFacade.UI)
             .doOnSubscribe {
+                // 로딩 뷰를 보여준다.
+                viewEvent(ViewEvent.ShowLoadingView)
                 // 검색 히스토리 요청 시 Show History View 요청을 한다.
                 viewEvent(SearchViewEvent.ShowHistoryView)
             }
-            .observeOn(SchedulersFacade.UI)
-            .map { history -> history.map { SearchHistoryItem(it) } }
+            .doOnEvent { _, _ -> viewEvent(ViewEvent.HideLoadingView) }
             .subscribe({
                 _history.value = it.toMutableList()
             }) {
-                Timber.e("error ${it.message}")
+                viewEvent(ViewEvent.ShowErrorDialog(it))
             }
     }
 
@@ -100,8 +103,10 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
         }
             .subscribeOn(SchedulersFacade.IO)
             .observeOn(SchedulersFacade.UI)
-            .subscribe {
+            .subscribe({
                 _history.value = mutableListOf()
+            }) {
+                viewEvent(ViewEvent.ShowErrorDialog(it))
             }
     }
 
@@ -115,7 +120,7 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
         }
             .subscribeOn(SchedulersFacade.IO)
             .observeOn(SchedulersFacade.UI)
-            .subscribe {
+            .subscribe({
                 _history.value?.let { history ->
                     _history.value = history.apply {
                         val item = SearchHistoryItem(keyword)
@@ -126,6 +131,8 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
                         add(0, item)
                     }
                 }
+            }) {
+                viewEvent(ViewEvent.ShowErrorDialog(it))
             }
     }
 
@@ -139,12 +146,14 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
         }
             .subscribeOn(SchedulersFacade.IO)
             .observeOn(SchedulersFacade.UI)
-            .subscribe {
+            .subscribe({
                 _history.value?.let { history ->
                     _history.value = history.apply {
                         remove(SearchHistoryItem(keyword))
                     }
                 }
+            }) {
+                viewEvent(ViewEvent.ShowErrorDialog(it))
             }
     }
 
@@ -158,18 +167,22 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
         }
 
         compositeDisposable += searchRepository.fetchSearch(finalRequestKeyword, page.toString())
+            .subscribeOn(SchedulersFacade.IO)
             .observeOn(SchedulersFacade.UI)
             .doOnSubscribe {
                 // 검색 요청 시 키보드를 내린다.
-                viewEvent(SearchViewEvent.HideKeyboard)
+                viewEvent(ViewEvent.HideKeyboard)
+
                 // 새로운 검색 요청 시 동작
                 if (page == 1) {
+                    viewEvent(ViewEvent.ShowLoadingView)
                     // Show Result View 요청을 한다.
                     viewEvent(SearchViewEvent.ShowResultView)
                     // 요청한 keyword를 저장한다.
                     insertSearchHistory(finalRequestKeyword)
                 }
             }
+            .doOnEvent { _, _ -> viewEvent(ViewEvent.HideLoadingView) }
             .subscribe({
                 if (it.isNotEmpty()) {
                     when {
@@ -184,7 +197,7 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
                             }
                         }
                         else -> {
-                            // wrong case
+                            viewEvent(ViewEvent.ShowErrorDialog(Throwable("It's wrong page : $page")))
                         }
                     }
                 } else {
@@ -192,12 +205,7 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
                     viewEvent(SearchViewEvent.ShowEmptyView)
                 }
             }) {
-                Timber.e("error ${it.message}")
+                viewEvent(ViewEvent.ShowErrorDialog(it))
             }
     }
-
-    companion object {
-
-    }
-
 }
