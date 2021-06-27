@@ -30,9 +30,8 @@ object NetworkModule {
             .readTimeout(15, TimeUnit.SECONDS)
             .connectTimeout(15, TimeUnit.SECONDS)
             .addNetworkInterceptor(defaultHeaderInterceptor)
-            .addNetworkInterceptor(
-                HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
-            ).build()
+            .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
+            .build()
 
     @Provides
     fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit =

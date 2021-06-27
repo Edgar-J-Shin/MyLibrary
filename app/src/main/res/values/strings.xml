@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">My Library</string>
     <string name="loading_message">Please wait …</string>
+    <string name="dialog_error_title">Error</string>
+    <string name="dialog_error_ok">OK</string>
 
     <!-- Main Tab -->
     <string name="tab_title_1">New</string>
@@ -26,7 +28,5 @@
     <!-- Book -->
     <string name="book_price">"Price: %s"</string>
     <string name="book_isbn13">"Isbn13: %s"</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

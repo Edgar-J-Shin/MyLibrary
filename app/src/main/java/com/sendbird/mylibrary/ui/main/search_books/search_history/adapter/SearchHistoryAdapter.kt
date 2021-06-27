@@ -6,10 +6,13 @@ import androidx.recyclerview.widget.ListAdapter
 import com.sendbird.mylibrary.R
 import com.sendbird.mylibrary.core.binding.binding
 import com.sendbird.mylibrary.databinding.ViewholderSearchHistoryItemBinding
-import com.sendbird.mylibrary.ui.main.search_books.search_history.data.SearchHistoryItem
+import com.sendbird.mylibrary.model.SearchHistoryItem
 import com.sendbird.mylibrary.ui.main.search_books.search_history.viewholder.SearchHistoryItemViewHolder
 
-class SearchHistoryAdapter(val searchKeyword: (String) -> Unit, val deleteKeyword: (String) -> Unit) : ListAdapter<SearchHistoryItem, SearchHistoryItemViewHolder>(diffUtil) {
+class SearchHistoryAdapter(
+    val searchKeyword: (String) -> Unit,
+    val deleteKeyword: (String) -> Unit
+) : ListAdapter<SearchHistoryItem, SearchHistoryItemViewHolder>(diffUtil) {
     override fun onBindViewHolder(holder: SearchHistoryItemViewHolder, position: Int) {
         holder.bind(getItem(position))
     }

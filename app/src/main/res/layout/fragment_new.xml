@@ -24,7 +24,6 @@
             android:clipToPadding="false"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            bind:submitList="@{viewModel.books}"
             tools:listitem="@layout/viewholder_book" />
 
     </FrameLayout>

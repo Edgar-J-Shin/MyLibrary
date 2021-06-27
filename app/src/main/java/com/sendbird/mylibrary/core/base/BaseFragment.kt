@@ -8,6 +8,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.sendbird.mylibrary.R
 import com.sendbird.mylibrary.core.binding.binding
 import com.sendbird.mylibrary.core.binding.initBinding
 import com.sendbird.mylibrary.ui.view.CustomLoadingDialog
@@ -27,6 +28,7 @@ abstract class BaseFragment<T : ViewDataBinding> constructor(
         return binding.root
     }
 
+    // Custom Loading View
     private val dialogCustom: CustomLoadingDialog by lazy { CustomLoadingDialog(requireContext()) }
     protected fun showLoadingView() {
         dialogCustom.show()
@@ -36,11 +38,12 @@ abstract class BaseFragment<T : ViewDataBinding> constructor(
         dialogCustom.hide()
     }
 
+    // Custom Error Dialog
     protected fun showErrorDialog(throwable: Throwable) {
         AlertDialog.Builder(requireContext())
-            .setTitle("Error")
+            .setTitle(getString(R.string.dialog_error_title))
             .setMessage(throwable.message)
-            .setNegativeButton("OK") { dialog, _ ->
+            .setNegativeButton(getString(R.string.dialog_error_ok)) { dialog, _ ->
                 dialog.dismiss()
             }
             .create()
